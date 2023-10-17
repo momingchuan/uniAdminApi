@@ -1,0 +1,10 @@
+[{
+	"menu_id": "uni-feedback-admin",
+	"name": "问题反馈",
+	"icon": "help",
+	"url": "uni_modules/uni-feedback-admin/pages/uni-feedback-admin/list",
+	"sort": 9527,
+	"parent_id": "",
+	"permission": [],
+	"enable": true
+}]

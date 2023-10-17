@@ -1,0 +1,61 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["username"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"username":{
+			"title": "姓名",
+			"bsonType": "string",
+			"description": "请输入用户名"
+		},
+		"tel":{
+			"title": "电话",
+			"bsonType": "string",
+			"description": "手机号码",
+			"pattern": "^\\+?[0-9-]{3,20}$",
+			"title": "手机号码",
+			"trim": "both"
+		},
+		
+		
+		
+		"gender": {
+			"bsonType": "int",
+			"defaultValue": 0,
+			"description": "用户性别：0 保密 1 男性 2 女性",
+			"enum": [{
+					"text": "保密",
+					"value": 0
+				},
+				{
+					"text": "男",
+					"value": 1
+				},
+				{
+					"text": "女",
+					"value": 2
+				}
+			],
+			"title": "性别",
+			"permission": {
+				"read": "doc._id == auth.uid || 'READ_UNI_ID_USERS' in auth.permission",
+				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+			}
+		},
+		
+		"avatar":{
+			"title": "头像",
+			"bsonType": "file"
+		}
+		
+	}
+}

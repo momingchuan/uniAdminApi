@@ -24,7 +24,7 @@
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'title')" sortable @sort-change="sortChange($event, 'title')">标题</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'author')" sortable @sort-change="sortChange($event, 'author')">作者</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'avatar')">封面大图</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'content')" sortable @sort-change="sortChange($event, 'content')">文章内容</uni-th>
+
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'view_count')" sortable @sort-change="sortChange($event, 'view_count')">阅读量</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'is_essence')">推荐</uni-th>
             <uni-th align="center" filter-type="timestamp" @filter-change="filterChange($event, 'publish_date')" sortable @sort-change="sortChange($event, 'publish_date')">发表时间</uni-th>
@@ -38,7 +38,7 @@
               <uni-file-picker v-if="item.avatar && item.avatar.fileType == 'image'" :value="item.avatar" :file-mediatype="item.avatar && item.avatar.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
               <uni-link v-else :href="item.avatar && item.avatar.url" :text="item.avatar && item.avatar.url"></uni-link>
             </uni-td>
-            <uni-td align="center">{{item.content}}</uni-td>
+          
             <uni-td align="center">{{item.view_count}}</uni-td>
             <uni-td align="center">{{item.is_essence == true ? '✅' : '❌'}}</uni-td>
             <uni-td align="center">

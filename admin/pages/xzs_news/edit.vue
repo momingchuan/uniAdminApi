@@ -11,7 +11,11 @@
         <uni-file-picker return-type="object" v-model="formData.avatar"></uni-file-picker>
       </uni-forms-item>
       <uni-forms-item name="content" label="内容" required>
-        <uni-easyinput placeholder="文章内容" v-model="formData.content" trim="right"></uni-easyinput>
+	  <div id="div1">
+		  <div v-html="formData.content"></div>
+		
+			  
+	  </div>
       </uni-forms-item>
       <uni-forms-item name="view_count" label="阅读量">
         <uni-easyinput placeholder="阅读数量" type="number" v-model="formData.view_count"></uni-easyinput>
@@ -37,11 +41,11 @@
 
 <script>
   import { validator } from '../../js_sdk/validator/xzs_news.js';
-
+import E from 'wangeditor';
   const db = uniCloud.database();
   const dbCmd = db.command;
   const dbCollectionName = 'xzs_news';
-
+  let editor=null;
   function getValidator(fields) {
     let result = {}
     for (let key in validator) {
@@ -94,9 +98,34 @@
     },
     onReady() {
       this.$refs.form.setRules(this.rules)
+	  this.onWangEdit()
     },
     methods: {
-      
+	  //初始化wangEdit
+	  onWangEdit(){
+		   editor = new E('#div1')
+		   editor.config.zIndex = 0
+			editor.config.onblur =  (newHtml)=> {
+				this.formData.content = newHtml
+			}
+			
+			editor.config.customUploadImg = function (resultFiles, insertImgFn) {
+				
+				resultFiles.forEach(item=>{
+
+					let path=URL.createObjectURL(item);
+					let name = item.name;
+					uniCloud.uploadFile({
+						filePath:path,
+						cloudPath:name
+					}).then(res=>{
+						insertImgFn(res.fileID)
+					})
+				})
+			}
+			
+		  editor.create()
+	  },
       /**
        * 验证表单并提交
        */
@@ -116,6 +145,7 @@
        * 提交表单
        */
       submitForm(value) {
+		  value.content=editor.txt.html();
         // 使用 clientDB 提交数据
         return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
           uni.showToast({
